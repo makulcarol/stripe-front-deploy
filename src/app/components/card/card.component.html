@@ -1,0 +1,31 @@
+<article class="card-validator">
+  <form [formGroup]="formCreditCard" (submit)="validateCard()">
+    <header>
+      <h2>Validação de Cartão</h2>
+    </header>
+    <div class="row">
+      <label>Número Cartão</label>
+      <textarea
+        formControlName="allCards"
+        rows="5"
+        [ngClass]="{
+          is_invalid: formCreditCard.controls['allCards'].invalid && isSubmited
+        }"
+      ></textarea>
+      <div
+        *ngIf="formCreditCard.controls['allCards'].invalid && isSubmited"
+        class="alert"
+      >
+        <div *ngIf="formCreditCard.controls['allCards'].errors">
+          Digite o número do cartão
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <input type="submit" value="Adicionar para validação" />
+    </div>
+  </form>
+  <button (click)="closeModal()" class="close-btn" id="close-btn">
+    <span>&times;</span>
+  </button>
+</article>

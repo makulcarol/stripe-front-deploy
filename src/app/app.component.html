@@ -1,0 +1,71 @@
+<main class="wrapper">
+  <div class="row-cards">
+    <div class="card total">
+      <h2>Total</h2>
+      <span>{{ cardToValidate.length }}</span>
+    </div>
+    <div class="card aprovado">
+      <h2>Aprovados</h2>
+      <span>{{ aprovedCards }}</span>
+    </div>
+    <div class="card reprovado">
+      <h2>Reprovados</h2>
+      <span>{{ reprovedCards }}</span>
+    </div>
+    <div class="card testado">
+      <h2>Testados</h2>
+      <span>{{ testedCards }}</span>
+    </div>
+  </div>
+  <div class="wrapper-table">
+    <div class="row-btn">
+      <button (click)="openModal()">Adicionar cartão</button>
+      <button (click)="getInfosStripe()">Validar cartões</button>
+    </div>
+    <div class="wrapper-table-infos">
+      <table>
+        <thead>
+          <tr>
+            <th>Bandeira</th>
+            <th>Cartão</th>
+            <th>Mês</th>
+            <th>Ano</th>
+            <th>CVV</th>
+            <th>Status</th>
+            <th>Mensagem</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let cardInfo of cardToValidate"
+            id="row-{{ cardInfo.cardNumber }}"
+          >
+            <td>{{ cardInfo.bandeiraCard }}</td>
+            <td>{{ cardInfo.cardNumber }}</td>
+            <td>{{ cardInfo.expMonth }}</td>
+            <td>{{ cardInfo.expYear }}</td>
+            <td>{{ cardInfo.securityCode }}</td>
+            <td>
+              <span *ngIf="!cardInfo.isProcessed; else resultFinal">
+                {{ cardInfo.statusProcessed }}
+              </span>
+              <ng-template #resultFinal>
+                <span
+                  [ngClass]="{
+                    is_invalid: !cardInfo.status
+                  }"
+                >
+                  {{ cardInfo.status ? "Reprovado" : "Aprovado" }}
+                </span>
+              </ng-template>
+            </td>
+            <td>{{ cardInfo.errorMessage }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+<div id="modal-card" class="modal">
+  <card (emitter)="saveCard($event)"></card>
+</div>
