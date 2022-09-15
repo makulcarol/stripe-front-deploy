@@ -55,7 +55,7 @@
                     is_invalid: !cardInfo.status
                   }"
                 >
-                  {{ cardInfo.status ? "Reprovado" : "Aprovado" }}
+                  {{ !cardInfo.status ? "Reprovado" : "Aprovado" }}
                 </span>
               </ng-template>
             </td>
